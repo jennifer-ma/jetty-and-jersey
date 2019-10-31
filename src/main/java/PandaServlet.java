@@ -27,7 +27,7 @@ public class PandaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
 
         resp.setStatus(HttpStatus.OK_200);
 
@@ -38,7 +38,8 @@ public class PandaServlet extends HttpServlet {
 
     }
 
-    private void writeResponse(HttpServletResponse resp, String pandaName) throws IOException {
+    private void writeResponse(HttpServletResponse resp, String pandaName)
+            throws IOException {
 
         if (pandaName != null && !pandaName.equals("")) {
             resp.getWriter().println("Panda's name is " + pandaName);
