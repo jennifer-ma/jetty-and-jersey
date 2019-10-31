@@ -15,12 +15,13 @@ public class PandaServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
 
         // check if there is a name in the url
-        String pathInfo = req.getPathInfo();
-        if (pathInfo != null && !pathInfo.equals("")) {
-            resp.getWriter().println("Panda's name is " + pathInfo.substring(1));
-        } else {
-            resp.getWriter().println("Panda");
+        String pandaName = req.getPathInfo(); // either null or /name
+
+        if (pandaName != null) {
+            pandaName = pandaName.substring(1); // remove the / at the beginning
         }
+
+        writeResponse(resp, pandaName);
 
     }
 
@@ -31,9 +32,16 @@ public class PandaServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
 
         // check if there is a name in parameters (form or query string)
-        String name = req.getParameter("name");
-        if (name != null && !name.equals("")) {
-            resp.getWriter().println("Panda's name is " + name);
+        String pandaName = req.getParameter("name");
+
+        writeResponse(resp, pandaName);
+
+    }
+
+    private void writeResponse(HttpServletResponse resp, String pandaName) throws IOException {
+
+        if (pandaName != null && !pandaName.equals("")) {
+            resp.getWriter().println("Panda's name is " + pandaName);
         } else {
             resp.getWriter().println("Panda");
         }
