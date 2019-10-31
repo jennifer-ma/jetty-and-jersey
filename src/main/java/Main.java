@@ -10,21 +10,32 @@ public class Main {
 
         Server server = new Server(7070);
         ServletContextHandler handler = new ServletContextHandler(server, "/");
-
-        ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/*");
         server.setHandler(handler);
+
+        // Add handler for /hello
+        ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/hello/*");
 //        servletHolder.setInitOrder(0);
 
 //        servletHolder.setInitParameter("jersey.config.server.provider.packages", "");
+
+//        System.out.println("this.getClass().getPackage().getName() = " + this.getClass().getPackage().getName());
+//        System.out.println("this.getClass().getCanonicalName() = " + this.getClass().getCanonicalName());
+        System.out.println("Main.class.getPackageName() = " + Main.class.getPackage().getName());
 
         // Tells the Jersey Servlet which REST service/class to load.
         servletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
                 HomepageResource.class.getCanonicalName());
+//
 
-//        handler.addServlet(MyServlet.class, "/hello");
-//        handler.addServlet(PandaServlet.class, "/panda/*");
-        
+        // Add handler for /panda
+        ServletHolder pandaServletHolder = handler.addServlet(ServletContainer.class, "/panda/*");
+        pandaServletHolder.setInitParameter(
+                "jersey.config.server.provider.classnames",
+                PandaResource.class.getCanonicalName());
+
+
+
 
         try {
             server.start();
