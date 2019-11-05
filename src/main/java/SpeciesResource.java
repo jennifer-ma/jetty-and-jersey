@@ -4,7 +4,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/")
 public class SpeciesResource {
@@ -14,19 +16,19 @@ public class SpeciesResource {
         return "Panda";
     }
 
-//    @GET
-//    @Path("/{name}")
-//    public String getPanda(@PathParam("name") String name) {
-//        return "Panda's name is " + name;
-//    }
-
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("text/plain")
     public String postSpecies(Species species) {
-        return species.speciesName;
+//        return species.speciesName;
+        System.out.println("species.speciesName = " + species.speciesName);
+        return "test";
+
 //        return "Panda's name is " + name;
 
+//        String output = species.toString();
+
+//        return Response.status(200).entity(output).build();
     }
 
 
