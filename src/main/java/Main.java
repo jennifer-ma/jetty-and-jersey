@@ -4,6 +4,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Main {
@@ -11,8 +12,13 @@ public class Main {
     public static void main(String[] args) {
 
         Server server = new Server(7070);
-        ServletContextHandler handler = new ServletContextHandler(server, "/");
+
+//        ServletContextHandler handler = new ServletContextHandler(server, "/");
+        ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        handler.setContextPath("/");
+
         server.setHandler(handler);
+
 
         //*** Add handler for /hello
         ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/hello/*");
@@ -40,13 +46,13 @@ public class Main {
         //*** Add handler for /species, and use jersey
 
 //        ServletHolder speciesServletHolder = handler.addServlet(ServletContainer.class, "/species/*");
-        // set the location to search for paths
+////         set the location to search for paths
 //        speciesServletHolder.setInitParameter(
 //                "jersey.config.server.provider.classnames",
 //                SpeciesResource.class.getCanonicalName());
 
-//        // Create JAX-RS application.
-//        // ResourceConfig is a jersey class
+        // Create JAX-RS application.
+        // ResourceConfig is a jersey class
 //        final ResourceConfig application = new ResourceConfig()
 //                .packages("jersey.jetty.embedded")
 //                .register(JacksonFeature.class); // for json-to-object conversion
@@ -63,7 +69,10 @@ public class Main {
         speciesServletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
                 SpeciesResource.class.getCanonicalName());
-
+        speciesServletHolder.setInitParameter(ServerProperties.PROVIDER_PACKAGES,
+                "com.fasterxml.jackson.jaxrs.json;"
+                        + "jersey.jetty.embedded"  // my package(s)
+        );
 
 
         try {

@@ -21,23 +21,23 @@ public class SpeciesResource {
 //    }
 
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public String postSpecies(Species species) {
-//        return species.speciesName;
-////        return "Panda's name is " + name;
-//
-//    }
-//
-//
-//    @POST
-//    @Path("test")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public String postSpecies(String body) {
-//        System.out.println("calling postSpecies");
-//        return body;
-////        return "Panda's name is " + name;
-//
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String postSpecies(Species species) {
+        return species.speciesName;
+//        return "Panda's name is " + name;
+
+    }
+
+
+    @POST
+    @Path("test")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String postSpecies(String body) {
+        System.out.println("calling postSpecies");
+        return body;
+//        return "Panda's name is " + name;
+
+    }
 
 }
