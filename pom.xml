@@ -52,6 +52,8 @@
             <artifactId>jersey-container-servlet-core</artifactId>
             <version>2.25.1</version>
         </dependency>
+
+        <!-- jackson -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
@@ -65,6 +67,7 @@
             <version>2.3.1</version>
         </dependency>
 
+        <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
