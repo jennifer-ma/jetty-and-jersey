@@ -22,9 +22,10 @@ public class SpeciesResource {
     public String postSpecies(Species species) {
 //        return species.speciesName;
         System.out.println("species.speciesName = " + species.speciesName);
+        System.out.println("species.lifeSpan = " + species.lifeSpan);
+        System.out.println("species.taxonomy = " + species.taxonomy);
+        System.out.println("species.taxonomy.klass = " + species.taxonomy.klass);
         return "test";
-
-//        return "Panda's name is " + name;
 
 //        String output = species.toString();
 
