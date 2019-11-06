@@ -15,28 +15,16 @@ public class Main {
 
         Server server = new Server(7070);
 
-//        ServletContextHandler handler = new ServletContextHandler(server, "/");
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.setContextPath("/");
-
         server.setHandler(handler);
-
 
         //*** Add handler for /hello
         ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/hello/*");
-//        servletHolder.setInitOrder(0);
-
-//        servletHolder.setInitParameter("jersey.config.server.provider.packages", "");
-
-//        System.out.println("this.getClass().getPackage().getName() = " + this.getClass().getPackage().getName());
-//        System.out.println("this.getClass().getCanonicalName() = " + this.getClass().getCanonicalName());
-//        System.out.println("Main.class.getPackageName() = " + Main.class.getPackage().getName());
-
         // Tells the Jersey Servlet which REST service/class to load.
         servletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
                 HomepageResource.class.getCanonicalName());
-//
 
         //*** Add handler for /panda
         ServletHolder pandaServletHolder = handler.addServlet(ServletContainer.class, "/panda/*");
@@ -44,44 +32,12 @@ public class Main {
                 "jersey.config.server.provider.classnames",
                 PandaResource.class.getCanonicalName());
 
-
         //*** Add handler for /species, and use jersey
-
-//        ServletHolder speciesServletHolder = handler.addServlet(ServletContainer.class, "/species/*");
-////         set the location to search for paths
-//        speciesServletHolder.setInitParameter(
-//                "jersey.config.server.provider.classnames",
-//                SpeciesResource.class.getCanonicalName());
-
-        // Create JAX-RS application.
-        // ResourceConfig is a jersey class
-//        final ResourceConfig application = new ResourceConfig()
-//                .packages("jersey.jetty.embedded")
-//                .register(JacksonFeature.class); // for json-to-object conversion
-//        // Create JAX-RS application.
-//        final ResourceConfig application = new ResourceConfig()
-////        final Application application = new ResourceConfig()
-//                .packages("org.glassfish.jersey.examples.jackson")
-//                .register(JacksonFeature.class);
-
-        // use a jersey servlet container and put the jax-rs application in there
-//        ServletHolder speciesServletHolder = new ServletHolder(new
-//                org.glassfish.jersey.servlet.ServletContainer(application));
-        // handler is a jetty thing
-        // add the servlet and set the path...
         ServletHolder speciesServletHolder = handler.addServlet(ServletContainer.class, "/species/*");
-
-//        handler.addServlet(speciesServletHolder, "/species/*");
-
         speciesServletHolder.setInitOrder(1);
         speciesServletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
                 SpeciesResource.class.getCanonicalName());
-        speciesServletHolder.setInitParameter(ServerProperties.PROVIDER_PACKAGES,
-                "com.fasterxml.jackson.jaxrs.json;"
-                        + "com.jennifer.study"  // my package(s)
-//                        + "jersey.jetty.embedded"  // my package(s)
-        );
 
 
         try {
