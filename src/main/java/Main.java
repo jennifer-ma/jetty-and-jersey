@@ -21,7 +21,6 @@ public class Main {
     public static void main(String[] args) {
 
         Server server = new Server();
-//        Server server = new Server(7070);
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(7070);
 
@@ -50,29 +49,18 @@ public class Main {
                 SpeciesResource.class.getCanonicalName());
 
 
+        // enable https support
         HttpConfiguration https = new HttpConfiguration();
-
         https.addCustomizer(new SecureRequestCustomizer());
-
         SslContextFactory sslContextFactory = new SslContextFactory();
-
         sslContextFactory.setKeyStorePath(Main.class.getResource("/keystore.jks").toExternalForm());
-
         sslContextFactory.setKeyStorePassword("123456");
-
         sslContextFactory.setKeyManagerPassword("123456");
-
         ServerConnector sslConnector = new ServerConnector(server,
-
                 new SslConnectionFactory(sslContextFactory, "http/1.1"),
-
                 new HttpConnectionFactory(https));
-
         sslConnector.setPort(8080);
-
         server.setConnectors(new Connector[] { connector, sslConnector });
-
-
 
 
         try {
