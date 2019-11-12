@@ -41,7 +41,6 @@ public class Species {
         return (speciesName == null ||
                 lifeSpan == 0 ||
                 ecosystems == null ||
-                taxonomy == null) ?
-                true : false;
+                taxonomy == null);
     }
 }
