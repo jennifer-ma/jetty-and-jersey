@@ -21,7 +21,7 @@ public class PandaResourceTest {
 
     @Before
     public void setUp() throws Exception {
-        Server server = new Server(7070);
+        Server server = new Server(7071);
 
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.setContextPath("/");
