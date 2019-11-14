@@ -30,7 +30,7 @@ public class PersistenceModule extends AbstractModule {
 
     @ProvidesIntoSet
     @HomepageResourceInterface
-    Class<?> providesAlertResource() {
+    Class<?> providesHomepageResource() {
         return HomepageResource.class;
     }
 

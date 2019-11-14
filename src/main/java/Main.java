@@ -29,34 +29,12 @@ public class Main {
         server.setHandler(context);
 
         final Injector injector = Guice.createInjector(new PersistenceModule());
-//        PersistenceService s = injector.getInstance(PersistenceService.class);
-//        s.persistSomething();
-
-//        HomepageResource s = injector.getInstance(HomepageResource.class);
-//        s.get();
-//        s.persistSomething();
-
 
         //*** Add servlet for /hello
         // Initialize Jersey.
         ServletContainer container = new ServletContainer(injector.getInstance(ResourceConfig.class));
         ServletHolder holder = new ServletHolder(container);
         context.addServlet(holder, "/hello/*");
-
-//        // Initialize Jersey.
-//        ServletContainer container = new ServletContainer(injector.getInstance(ResourceConfig.class));
-//        ServletHolder servletHolder = new ServletHolder(container);
-////        ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/hello/*");
-//        // Tells the Jersey Servlet which REST service/class to load.
-//        servletHolder.setInitParameter(
-//                "jersey.config.server.provider.classnames",
-//                HomepageResource.class.getCanonicalName());
-//        context.addServlet(servletHolder, "/hello/*");
-
-//        ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/hello/*");
-//        servletHolder.setInitParameter(
-//                "jersey.config.server.provider.classnames",
-//                HomepageResource.class.getCanonicalName());
 
 
         //*** Add servlet for /panda

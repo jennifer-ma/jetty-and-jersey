@@ -14,7 +14,7 @@ public class HomepageResource {
 
     @Inject
     public HomepageResource(PersistenceService storage) {
-        this.storage = storage; //new InMemoryPersistence();
+        this.storage = storage;
     }
 
     @GET
