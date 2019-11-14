@@ -1,4 +1,6 @@
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -14,8 +16,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import javax.ws.rs.core.Application;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -24,25 +24,49 @@ public class Main {
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(7070);
 
-        ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        handler.setContextPath("/");
-        server.setHandler(handler);
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        server.setHandler(context);
 
-        //*** Add handler for /hello
-        ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/hello/*");
-        // Tells the Jersey Servlet which REST service/class to load.
-        servletHolder.setInitParameter(
-                "jersey.config.server.provider.classnames",
-                HomepageResource.class.getCanonicalName());
+        final Injector injector = Guice.createInjector(new PersistenceModule());
+//        PersistenceService s = injector.getInstance(PersistenceService.class);
+//        s.persistSomething();
 
-        //*** Add handler for /panda
-        ServletHolder pandaServletHolder = handler.addServlet(ServletContainer.class, "/panda/*");
+//        HomepageResource s = injector.getInstance(HomepageResource.class);
+//        s.get();
+//        s.persistSomething();
+
+
+        //*** Add servlet for /hello
+        // Initialize Jersey.
+        ServletContainer container = new ServletContainer(injector.getInstance(ResourceConfig.class));
+        ServletHolder holder = new ServletHolder(container);
+        context.addServlet(holder, "/hello/*");
+
+//        // Initialize Jersey.
+//        ServletContainer container = new ServletContainer(injector.getInstance(ResourceConfig.class));
+//        ServletHolder servletHolder = new ServletHolder(container);
+////        ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/hello/*");
+//        // Tells the Jersey Servlet which REST service/class to load.
+//        servletHolder.setInitParameter(
+//                "jersey.config.server.provider.classnames",
+//                HomepageResource.class.getCanonicalName());
+//        context.addServlet(servletHolder, "/hello/*");
+
+//        ServletHolder servletHolder = context.addServlet(ServletContainer.class, "/hello/*");
+//        servletHolder.setInitParameter(
+//                "jersey.config.server.provider.classnames",
+//                HomepageResource.class.getCanonicalName());
+
+
+        //*** Add servlet for /panda
+        ServletHolder pandaServletHolder = context.addServlet(ServletContainer.class, "/panda/*");
         pandaServletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",
                 PandaResource.class.getCanonicalName());
 
-        //*** Add handler for /species, and use jersey
-        ServletHolder speciesServletHolder = handler.addServlet(ServletContainer.class, "/species/*");
+        //*** Add servlet for /species, and use jersey
+        ServletHolder speciesServletHolder = context.addServlet(ServletContainer.class, "/species/*");
         speciesServletHolder.setInitOrder(1);
         speciesServletHolder.setInitParameter(
                 "jersey.config.server.provider.classnames",

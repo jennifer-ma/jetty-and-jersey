@@ -1,5 +1,9 @@
-public class PersistenceService {
-    public void persistSomething() {
-        System.out.println("Persisting something");
-    }
+import javax.inject.Singleton;
+
+//@Singleton
+public interface PersistenceService {
+    void persistSomething();
 }
+
+
+
