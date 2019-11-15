@@ -5,7 +5,6 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.multibindings.MultibindingsScanner;
 import com.google.inject.multibindings.ProvidesIntoSet;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.util.Set;
@@ -22,14 +21,14 @@ public class PersistenceModule extends AbstractModule {
     }
 
 //    @ProvidesIntoSet
-//    @HomepageResourceInterface
+//    @HomepageResourceAnnotation
 //    Class<?> providesJackson() {
 //        // Features.
 //        return JacksonFeature.class;
 //    }
 
     @ProvidesIntoSet
-    @HomepageResourceInterface
+    @HomepageResourceAnnotation
     Class<?> providesHomepageResource() {
         return HomepageResource.class;
     }
@@ -37,7 +36,7 @@ public class PersistenceModule extends AbstractModule {
     @Provides
     @Singleton
     @Inject
-    ResourceConfig providesJerseyResources(@HomepageResourceInterface Set<Class<?>> resources, Injector injector) {
+    ResourceConfig providesJerseyResources(@HomepageResourceAnnotation Set<Class<?>> resources, Injector injector) {
         ResourceConfig resourceConfig = new ResourceConfig();
         resources.stream().map(injector::getInstance).forEach(resourceConfig::register);
         return resourceConfig;
